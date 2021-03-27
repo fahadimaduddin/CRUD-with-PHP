@@ -57,3 +57,81 @@ function getData()
     $result = mysqli_query($GLOBALS['con'], $sql);
     return $result;
 }
+
+// update data
+function UpdateData(){
+    $bookid = textboxValue("book_id");
+    $bookname = textboxValue("book_name");
+    $bookpublisher = textboxValue("book_publisher");
+    $bookprice = textboxValue("book_price");
+
+    if($bookname && $bookpublisher && $bookprice){
+        $sql = "
+                    UPDATE books SET book_name='$bookname', book_publisher = '$bookpublisher', book_price = '$bookprice' WHERE id='$bookid';                    
+        ";
+
+       mysqli_query($GLOBALS['con'], $sql);
+            setStatus("success", "Data Successfully Updated");
+    
+            setStatus("danger", "Enable to Update Data");
+        
+
+    }else{
+        setStatus("danger", "Select Data Using Edit Icon");
+    }
+
+
+}
+
+
+function deleteRecord(){
+    $bookid = (int)textboxValue("book_id");
+
+    $sql = "DELETE FROM books WHERE id=$bookid";
+
+    mysqli_query($GLOBALS['con'], $sql);
+        setStatus("success","Record Deleted Successfully...!");
+    
+        setStatus("danger","Enable to Delete Record...!");
+    
+
+}
+
+
+function deleteBtn(){
+    $result = getData();
+    $i = 0;
+    if($result){
+        while ($row = mysqli_fetch_assoc($result)){
+            $i++;
+            if($i > 3){
+                buttonElement("btn-deleteall", "btn btn-danger" ,"<i class='fas fa-trash'></i> Delete All", "deleteall", "");
+                return;
+            }
+        }
+    }
+}
+
+
+function deleteAll(){
+    $sql = "DROP TABLE books";
+
+    mysqli_query($GLOBALS['con'], $sql);
+        setStatus("success","All Record deleted Successfully...!");
+        createDb();
+  
+        setStatus("danger","Something Went Wrong Record cannot deleted...!");
+  }
+
+
+// set id to textbox
+function setID(){
+    $getid = getData();
+    $id = 0;
+    if($getid){
+        while ($row = mysqli_fetch_assoc($getid)){
+            $id = $row['id'];
+        }
+    }
+    return ($id + 1);
+}

@@ -25,6 +25,18 @@ require_once "../CRUD_Operations/php/operation.php";
 if (isset($_POST['create'])) {
     createData();
 }
+if(isset($_POST['update'])){
+    UpdateData();
+}
+
+if(isset($_POST['delete'])){
+    deleteRecord();
+}
+
+if(isset($_POST['deleteall'])){
+    deleteAll();
+
+}
 ?>
     <main>
         <div class="container text-center">
@@ -50,7 +62,7 @@ if (isset($_POST['create'])) {
                         <?php buttonElement("btn-read", "btn btn-primary", "<i class='fas fa-sync'></i>", "read", "dat-toggle='tooltip' data-placement='bottom' title='Read'");?>
                         <?php buttonElement("btn-update", "btn btn-light border", "<i class='fas fa-pen-alt'></i>", "update", "dat-toggle='tooltip' data-placement='bottom' title='Update'");?>
                         <?php buttonElement("btn-delete", "btn btn-danger", "<i class='fas fa-trash-alt'></i>", "delete", "dat-toggle='tooltip' data-placement='bottom' title='Delete'");?>
-
+                        <?php deleteBtn();?>
                     </div>
                 </form>
 
@@ -77,22 +89,13 @@ $result = getData();
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {?>
                                     <tr>
-                                        <td>
-                                            <?php echo $row['id']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row['book_name']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row['book_publisher']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $row['book_price']; ?>
-                                        </td>
-                                        <td>
-                                            <i class='fas fa-edit btnedit'></i>
-                                        </td>
-                                    </tr>
+                                   <td data-id="<?php echo $row['id']; ?>"><?php echo $row['id']; ?></td>
+                                   <td data-id="<?php echo $row['id']; ?>"><?php echo $row['book_name']; ?></td>
+                                   <td data-id="<?php echo $row['id']; ?>"><?php echo $row['book_publisher']; ?></td>
+                                   <td data-id="<?php echo $row['id']; ?>"><?php echo '$' . $row['book_price']; ?></td>
+                                   <td ><i class="fas fa-edit btnedit" data-id="<?php echo $row['id']; ?>"></i></td>
+                               </tr>
+
                         <?php
 }
 }

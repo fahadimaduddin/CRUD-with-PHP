@@ -19,7 +19,7 @@ table .btnedit{
     padding: 1em;
 }
 
-.danger{
+.error{
     background-color: tomato;
     padding: 1em;
 }
